@@ -1,8 +1,12 @@
 package presentacion;
 
+import logicaNegocio.BaseDeDatos;
+import logicaNegocio.Persona;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * Clase IngresarPersonaForm.
@@ -26,6 +30,9 @@ public class IngresarPersonaForm extends JFrame {
     private JRadioButton rbtOtro;
     private JRadioButton rbtNoIndicado;
 
+
+    private BaseDeDatos baseDeDatos;
+
     private String getGenero() {
         return (rbtMasculino.isSelected()) ? "Masculino" :
                 (rbtFemenino.isSelected()) ? "Femenino" :
@@ -39,7 +46,10 @@ public class IngresarPersonaForm extends JFrame {
      *
      * Complejidad Temporal: O(1) Tiempo Constante.
      */
-    public IngresarPersonaForm() {
+    public IngresarPersonaForm(BaseDeDatos baseDeDatos) {
+
+        this.baseDeDatos = baseDeDatos;
+
         // Elimina el proceso cuando se cierra la ventana
         // this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         // Se asigna el panel principal al JFrame
@@ -67,6 +77,9 @@ public class IngresarPersonaForm extends JFrame {
                 String idioma = cmbIdioma.getSelectedItem().toString();
                 String aceptaTerminos = (chbTerminos.isSelected() == true) ? "Sí" : "No";
                 String genero = getGenero();
+
+                Persona persona = new Persona(codigo, nombre, apellido, idioma, chbTerminos.isSelected(), genero);
+                baseDeDatos.agregarPersona(persona);
 
                 String mensaje = "Tus datos son: \n" +
                                  "Código: " + codigo + "\n" +
