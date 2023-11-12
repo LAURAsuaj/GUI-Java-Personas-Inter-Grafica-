@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
  */
 public class VentanaPrincipalForm extends JFrame {
     private JPanel pnlPrincipal;
-    private BaseDeDatos baseDeDatos;
 
     /**
      * Método que inicializa el menú con las opciones para el usuario.
@@ -40,7 +39,7 @@ public class VentanaPrincipalForm extends JFrame {
              * Complejidad temporal: O(1) Complejidad Constante.
              */
             public void actionPerformed(ActionEvent e) {
-                IngresarPersonaForm ingresarPersonaForm = new IngresarPersonaForm(baseDeDatos);
+                IngresarPersonaForm ingresarPersonaForm = new IngresarPersonaForm();
             }
         });
 
@@ -53,7 +52,7 @@ public class VentanaPrincipalForm extends JFrame {
              */
             public void actionPerformed(ActionEvent e) {
                 //JOptionPane.showMessageDialog(consultarPersonasItem, "Opción seleccionada: Consultar Personas");
-                ConsultarPersonasForm consultarPersonasForm = new ConsultarPersonasForm(baseDeDatos);
+                ConsultarPersonasForm consultarPersonasForm = new ConsultarPersonasForm();
             }
         });
     }
@@ -64,9 +63,6 @@ public class VentanaPrincipalForm extends JFrame {
      * Complejidad Temporal: O(1) Tiempo Constante.
      */
     public VentanaPrincipalForm() {
-        this.baseDeDatos = new BaseDeDatos();
-
-
         this.inicializarMenu();
 
         // Obtener el tamaño de la pantalla

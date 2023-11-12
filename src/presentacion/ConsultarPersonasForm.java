@@ -13,16 +13,12 @@ public class ConsultarPersonasForm extends JFrame {
     private JPanel pnlPrincipal;
     private JLabel lblMensaje;
 
-
-    private BaseDeDatos baseDeDatos;
-
     /**
      * Constructor de la clase ConsultarPersonasForm
-     * @param baseDeDatos Objeto que contiene los datos de las personas de la aplicación
      *
      * Complejidad Temporal: O(1) Complejidad Constante.
      */
-    public ConsultarPersonasForm(BaseDeDatos baseDeDatos) {
+    public ConsultarPersonasForm() {
         // Elimina el proceso cuando se cierra la ventana
         // this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         // Se asigna el panel principal al JFrame
@@ -36,10 +32,7 @@ public class ConsultarPersonasForm extends JFrame {
         // Se muestra la ventana como visible
         this.setVisible(true);
 
-
-        this.baseDeDatos = baseDeDatos;
-
-        if (this.baseDeDatos.getListaDePersonas().size() == 0) {
+        if (BaseDeDatos.getListaDePersonas().size() == 0) {
             this.lblMensaje.setText("No hay personas registradas");
         } else {
             this.lblMensaje.setText("Lista de personas registradas:");
@@ -63,8 +56,9 @@ public class ConsultarPersonasForm extends JFrame {
             modelo.addColumn(nombreDeColumna);
         }
         // Agregar filas
-        for(Persona persona : baseDeDatos.getListaDePersonas()) {
-            modelo.addRow(new Object[]{persona.getCodigo(), persona.getNombre(), persona.getApellido(), persona.getIdioma(), persona.isAceptaTerminos(), persona.getGenero()});
+        for(Persona persona : BaseDeDatos.getListaDePersonas()) {
+            Object[] fila = new Object[]{persona.getCodigo(), persona.getNombre(), persona.getApellido(), persona.getIdioma(), persona.isAceptaTerminos(), persona.getGenero()};
+            modelo.addRow(fila);
         }
 
         // Crear la JTable con el modelo

@@ -30,9 +30,6 @@ public class IngresarPersonaForm extends JFrame {
     private JRadioButton rbtOtro;
     private JRadioButton rbtNoIndicado;
 
-
-    private BaseDeDatos baseDeDatos;
-
     private String getGenero() {
         return (rbtMasculino.isSelected()) ? "Masculino" :
                 (rbtFemenino.isSelected()) ? "Femenino" :
@@ -46,9 +43,7 @@ public class IngresarPersonaForm extends JFrame {
      *
      * Complejidad Temporal: O(1) Tiempo Constante.
      */
-    public IngresarPersonaForm(BaseDeDatos baseDeDatos) {
-
-        this.baseDeDatos = baseDeDatos;
+    public IngresarPersonaForm() {
 
         // Elimina el proceso cuando se cierra la ventana
         // this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -79,7 +74,7 @@ public class IngresarPersonaForm extends JFrame {
                 String genero = getGenero();
 
                 Persona persona = new Persona(codigo, nombre, apellido, idioma, chbTerminos.isSelected(), genero);
-                baseDeDatos.agregarPersona(persona);
+                BaseDeDatos.agregarPersona(persona);
 
                 String mensaje = "Tus datos son: \n" +
                                  "Código: " + codigo + "\n" +
@@ -90,6 +85,7 @@ public class IngresarPersonaForm extends JFrame {
                                  "Acepta términos y condiciones: " + aceptaTerminos;
 
                 JOptionPane.showMessageDialog(btnGuardar, mensaje);
+                dispose();
             }
         });
     }
