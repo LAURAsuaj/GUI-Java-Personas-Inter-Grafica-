@@ -1,0 +1,144 @@
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+class Vuelo {
+    private int numeroVuelo;
+    private String origen;
+    private String destino;
+    private Date fechaHoraSalida;
+    private int capacidadMaxima;
+    private List<Reserva> reservas;
+
+    public Vuelo(int numeroVuelo, String origen, String destino, Date fechaHoraSalida, int capacidadMaxima) {
+        this.numeroVuelo = numeroVuelo;
+        this.origen = origen;
+        this.destino = destino;
+        this.fechaHoraSalida = fechaHoraSalida;
+        this.capacidadMaxima = capacidadMaxima;
+        this.reservas = new ArrayList<>();
+    }
+
+    public int getNumeroVuelo() {
+        return numeroVuelo;
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public Date getFechaHoraSalida() {
+        return fechaHoraSalida;
+    }
+
+    public int getCapacidadMaxima() {
+        return capacidadMaxima;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public boolean reservarVuelo(Pasajero pasajero, Date fechaReserva) {
+        if (reservas.size() < capacidadMaxima) {
+            Reserva reserva = new Reserva(this, pasajero, fechaReserva);
+            reservas.add(reserva);
+            return true;
+        } else {
+            System.out.println("El vuelo está lleno. No se puede realizar la reserva.");
+            return false;
+        }
+    }
+}
+
+class Pasajero {
+    private String nombre;
+    private String numeroPasaporte;
+    private int edad;
+    private String preferenciasAlimenticias;
+
+    public Pasajero(String nombre, String numeroPasaporte, int edad, String preferenciasAlimenticias) {
+        this.nombre = nombre;
+        this.numeroPasaporte = numeroPasaporte;
+        this.edad = edad;
+        this.preferenciasAlimenticias = preferenciasAlimenticias;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getNumeroPasaporte() {
+        return numeroPasaporte;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public String getPreferenciasAlimenticias() {
+        return preferenciasAlimenticias;
+    }
+}
+
+class Reserva {
+    private Vuelo vuelo;
+    private Pasajero pasajero;
+    private Date fechaReserva;
+    private boolean confirmada;
+
+    public Reserva(Vuelo vuelo, Pasajero pasajero, Date fechaReserva) {
+        this.vuelo = vuelo;
+        this.pasajero = pasajero;
+        this.fechaReserva = fechaReserva;
+        this.confirmada = false;
+    }
+
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    public Pasajero getPasajero() {
+        return pasajero;
+    }
+
+    public Date getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public boolean isConfirmada() {
+        return confirmada;
+    }
+
+    public void confirmarReserva() {
+        confirmada = true;
+        System.out.println("Reserva confirmada para el vuelo " + vuelo.getNumeroVuelo() +
+                " con pasajero " + pasajero.getNombre());
+    }
+}
+
+public class SistemaReservasVuelos {
+    public static void main(String[] args) {
+        Vuelo vuelo1 = new Vuelo(101, "Ciudad A", "Ciudad B", new Date(), 150);
+        Pasajero pasajero1 = new Pasajero("Juan Pérez", "ABC123", 30, "Vegetariano");
+
+        vuelo1.reservarVuelo(pasajero1, new Date());
+        vuelo1.reservarVuelo(new Pasajero("María Gómez", "XYZ789", 25, "Sin restricciones"), new Date());
+        vuelo1.reservarVuelo(new Pasajero("Carlos Rodríguez", "DEF456", 40, "Kosher"), new Date());
+
+        // Intentar reservar en un vuelo lleno
+        vuelo1.reservarVuelo(new Pasajero("Laura López", "GHI789", 28, "Sin restricciones"), new Date());
+
+        // Mostrar información de las reservas realizadas
+        List<Reserva> reservasVuelo1 = vuelo1.getReservas();
+        for (Reserva reserva : reservasVuelo1) {
+            System.out.println("Reserva para el vuelo " + reserva.getVuelo().getNumeroVuelo() +
+                    " con pasajero " + reserva.getPasajero().getNombre() +
+                    " confirmada: " + reserva.isConfirmada());
+        }
+    }
+}
