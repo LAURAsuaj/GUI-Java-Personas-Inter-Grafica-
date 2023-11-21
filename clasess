@@ -1,0 +1,57 @@
+import java.util.Date;
+
+class Vuelo {
+    private int numeroVuelo, capacidadMaxima;
+    private String origen, destino;
+    private Date fechaHoraSalida;
+
+    public Vuelo(int numeroVuelo, String origen, String destino, Date fechaHoraSalida, int capacidadMaxima) {
+        this.numeroVuelo = numeroVuelo;
+        this.origen = origen;
+        this.destino = destino;
+        this.fechaHoraSalida = fechaHoraSalida;
+        this.capacidadMaxima = capacidadMaxima;
+    }
+
+    public boolean reservar(Pasajero pasajero, Date fechaReserva) {
+        return capacidadMaxima > 0 && reservas.add(new Reserva(this, pasajero, fechaReserva));
+    }
+}
+
+class Pasajero {
+    private String nombre, numeroPasaporte, preferenciasAlimenticias;
+    private int edad;
+
+    public Pasajero(String nombre, String numeroPasaporte, int edad, String preferenciasAlimenticias) {
+        this.nombre = nombre;
+        this.numeroPasaporte = numeroPasaporte;
+        this.edad = edad;
+        this.preferenciasAlimenticias = preferenciasAlimenticias;
+    }
+}
+
+class Reserva {
+    private Vuelo vuelo;
+    private Pasajero pasajero;
+    private Date fechaReserva;
+
+    public Reserva(Vuelo vuelo, Pasajero pasajero, Date fechaReserva) {
+        this.vuelo = vuelo;
+        this.pasajero = pasajero;
+        this.fechaReserva = fechaReserva;
+    }
+}
+
+public class SistemaReservasVuelos {
+    public static void main(String[] args) {
+        Vuelo vuelo1 = new Vuelo(101, "Ciudad A", "Ciudad B", new Date(), 150);
+        Pasajero pasajero1 = new Pasajero("Juan Pérez", "ABC123", 30, "Vegetariano");
+
+        vuelo1.reservar(pasajero1, new Date());
+        vuelo1.reservar(new Pasajero("María Gómez", "XYZ789", 25, "Sin restricciones"), new Date());
+        vuelo1.reservar(new Pasajero("Carlos Rodríguez", "DEF456", 40, "Kosher"), new Date());
+
+        // Intentar reservar en un vuelo lleno
+        vuelo1.reservar(new Pasajero("Laura López", "GHI789", 28, "Sin restricciones"), new Date());
+    }
+}
